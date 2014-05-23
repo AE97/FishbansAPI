@@ -17,8 +17,7 @@
 package net.ae97.fishbans.api;
 
 /**
- * A Ban record for a particular username or {@link UUID}.
- *
+ * A Ban record for a particular username or {@link java.util.UUID}.
  *
  * @since 1.0
  * @author Lord_Ralex

@@ -1,0 +1,4 @@
+/target/
+/apidocs/
+nbactions*.xml
+nb-configuration.xml

@@ -17,7 +17,8 @@
 package net.ae97.fishbans.api.exceptions;
 
 /**
- * Thrown when no such {@link BanService} exists with a given name
+ * Thrown when no such {@link net.ae97.fishbans.api.BanService} exists with a given
+ * name
  *
  * @since 1.0
  * @author Lord_Ralex
