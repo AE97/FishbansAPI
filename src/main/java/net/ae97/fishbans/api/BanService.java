@@ -17,6 +17,9 @@
 package net.ae97.fishbans.api;
 
 /**
+ * The list of ban service provides which http://fishbans.com retrieves bans
+ * from.
+ *
  * @since 1.0
  * @author Lord_Ralex
  */
@@ -36,11 +39,24 @@ public enum BanService {
         this.legacy = legacy;
     }
 
+    /**
+     * Returns the user-friendly name for this ban service.
+     *
+     * @return User-friendly name
+     */
     public String getDisplayName() {
         return displayName;
     }
 
-    public boolean isLegacyBan() {
+    /**
+     * Returns whether the ban information for this ban service is legacy data
+     * on http://fishbans.com. Legacy ban services are ban services who no
+     * longer run or permit Fishbans from retrieving their data. Any data stored
+     * by Fishbans from such providers may be old and not contain new bans.
+     *
+     * @return True if bans are legacy data, false otherwise
+     */
+    public boolean isLegacy() {
         return legacy;
     }
 

@@ -26,11 +26,15 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import net.ae97.fishbans.api.exceptions.NoSuchProviderException;
+import net.ae97.fishbans.api.exceptions.NoSuchBanServiceException;
 import net.ae97.fishbans.api.exceptions.NoSuchUUIDException;
 import net.ae97.fishbans.api.exceptions.NoSuchUserException;
 
 /**
+ * The Fishbans API main class. This class is how information about bans may be
+ * retrieved. This uses the API which is documented at
+ * http://fishbans.com/docs.php.
+ *
  * @since 1.0
  * @author Lord_Ralex
  */
@@ -112,11 +116,11 @@ public class Fishbans {
      * @return List of Bans on the player, never null
      * @throws IOException Thrown if the data cannot be retrieved from Fishbans
      * @throws NoSuchUserException Thrown if no user with that name exists on
-     * @throws NoSuchProviderException Thrown if no {@link BanService} exists
+     * @throws NoSuchBanServiceException Thrown if no {@link BanService} exists
      * with the name Fishbans
      * @since 1.0
      */
-    public static List<Ban> getBans(String username, String service) throws IOException, NoSuchUserException, NoSuchProviderException {
+    public static List<Ban> getBans(String username, String service) throws IOException, NoSuchUserException, NoSuchBanServiceException {
         return getBans(username, service, false);
     }
 
@@ -131,11 +135,11 @@ public class Fishbans {
      * @throws IOException Thrown if the data cannot be retrieved from Fishbans
      * @throws NoSuchUUIDException Thrown if no {@link UUID} with that name
      * exists on Fishbans
-     * @throws NoSuchProviderException Thrown if no {@link BanService} exists
+     * @throws NoSuchBanServiceException Thrown if no {@link BanService} exists
      * with the name Fishbans
      * @since 1.0
      */
-    public static List<Ban> getBans(UUID uuid, String service) throws IOException, NoSuchUUIDException, NoSuchProviderException {
+    public static List<Ban> getBans(UUID uuid, String service) throws IOException, NoSuchUUIDException, NoSuchBanServiceException {
         return getBans(uuid, service, false);
     }
 
@@ -235,11 +239,11 @@ public class Fishbans {
      * @return List of Bans on the player, never null
      * @throws IOException Thrown if the data cannot be retrieved from Fishbans
      * @throws NoSuchUserException Thrown if no user with that name exists on
-     * @throws NoSuchProviderException Thrown if no {@link BanService} exists
+     * @throws NoSuchBanServiceException Thrown if no {@link BanService} exists
      * with the name Fishbans
      * @since 1.0
      */
-    public static List<Ban> getBans(String username, String service, boolean force) throws IOException, NoSuchUserException, NoSuchProviderException {
+    public static List<Ban> getBans(String username, String service, boolean force) throws IOException, NoSuchUserException, NoSuchBanServiceException {
         if (!force) {
             List<Ban> banlist = checkCache(username.toLowerCase());
             if (banlist != null) {
@@ -260,11 +264,11 @@ public class Fishbans {
      * @throws IOException Thrown if the data cannot be retrieved from Fishbans
      * @throws NoSuchUUIDException Thrown if no {@link UUID} with that name
      * exists on Fishbans
-     * @throws NoSuchProviderException Thrown if no {@link BanService} exists
+     * @throws NoSuchBanServiceException Thrown if no {@link BanService} exists
      * with the name Fishbans
      * @since 1.0
      */
-    public static List<Ban> getBans(UUID uuid, String service, boolean force) throws IOException, NoSuchUUIDException, NoSuchProviderException {
+    public static List<Ban> getBans(UUID uuid, String service, boolean force) throws IOException, NoSuchUUIDException, NoSuchBanServiceException {
         if (!force) {
             List<Ban> banlist = checkCache(uuid.toString());
             if (banlist != null) {

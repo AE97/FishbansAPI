@@ -19,11 +19,13 @@ package net.ae97.fishbans.api.exceptions;
 import java.util.UUID;
 
 /**
+ * Thrown when no such UUID exists on the Fishbans API
+ *
  * @since 1.0
  * @author Lord_Ralex
  */
 public class NoSuchUUIDException extends Exception {
-    
+
     public NoSuchUUIDException(UUID uuid) {
         super("UUID (" + uuid.toString() + ") is not known by Fishbans");
     }

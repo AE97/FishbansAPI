@@ -21,45 +21,69 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * This is the ban record for a user. It contains the list of bans this user
+ * (determined by UUID or username) in no particular order.
+ *
  * @since 1.0
  * @author Lord_Ralex
  */
 public class PlayerBans {
 
     private final LinkedList<Ban> banlist;
-    private final EnumMap<BanService, Integer> counts = new EnumMap<BanService, Integer>(BanService.class);
+    private final EnumMap<BanService, LinkedList<Ban>> counts = new EnumMap<BanService, LinkedList<Ban>>(BanService.class);
 
     protected PlayerBans(List<Ban> banlist) {
         this.banlist = new LinkedList<Ban>(banlist);
         for (BanService service : BanService.values()) {
-            counts.put(service, 0);
+            counts.put(service, new LinkedList<Ban>());
         }
         for (Ban ban : this.banlist) {
             if (ban.getService() != null) {
-                counts.put(ban.getService(), counts.get(ban.getService()));
+                LinkedList<Ban> old = counts.get(ban.getService());
+                old.add(ban);
+                counts.put(ban.getService(), old);
             }
         }
     }
 
+    /**
+     * Get the list of {@link Ban}s this particular player has. This is never
+     * null.
+     *
+     * @return List of Bans for this player, never null.
+     */
     public List<Ban> getBanList() {
         return (List<Ban>) banlist.clone();
     }
 
+    /**
+     * Get the list of {@link Ban}s this particular player has from a given
+     * {@link BanService}. This is never null.
+     *
+     * @param service Service to retrieve bans from
+     * @return List of Bans from that service, never null
+     */
     public List<Ban> getBanList(BanService service) {
-        LinkedList<Ban> bans = new LinkedList<Ban>();
-        for (Ban ban : banlist) {
-            if (ban.getService() == service) {
-                bans.add(ban);
-            }
-        }
-        return bans;
+        return counts.get(service);
     }
 
+    /**
+     * Gets the number of bans this player has
+     *
+     * @return Number of bans
+     */
     public int getBanCount() {
         return banlist.size();
     }
 
+    /**
+     * Get the number of {@link Ban}s this particular player has from a given
+     * {@link BanService}
+     *
+     * @param service Service to retrieve ban count from
+     * @return Number of bans
+     */
     public int getBanCount(BanService service) {
-        return counts.get(service);
+        return counts.get(service).size();
     }
 }

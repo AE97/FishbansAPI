@@ -17,6 +17,8 @@
 package net.ae97.fishbans.api.exceptions;
 
 /**
+ * Throw when no such user exists on the Fishbans API
+ *
  * @since 1.0
  * @author Lord_Ralex
  */

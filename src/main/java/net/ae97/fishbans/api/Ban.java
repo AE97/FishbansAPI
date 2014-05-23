@@ -17,6 +17,9 @@
 package net.ae97.fishbans.api;
 
 /**
+ * A Ban record for a particular username or {@link UUID}.
+ *
+ *
  * @since 1.0
  * @author Lord_Ralex
  */
@@ -30,10 +33,20 @@ public class Ban {
         this.reason = reason;
     }
 
+    /**
+     * Gets the reason for this particular ban
+     *
+     * @return Ban reason
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     * Gets the {@link BanService} that contains this ban reason
+     *
+     * @return The {@link BanService} which issued this ban
+     */
     public BanService getService() {
         return service;
     }
