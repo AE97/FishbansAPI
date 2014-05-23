@@ -14,7 +14,7 @@
   </repositories>
   
   <build>
-    <defaultGoal>clean install</defaultGoal>
+    <defaultGoal>clean install package generate-sources javadoc:javadoc</defaultGoal>
     <finalName>${project.artifactId}-v${project.version}</finalName>
     <plugins>
       <plugin>
@@ -32,102 +32,112 @@
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.4.3</version>
         <configuration>
-          <encoding>${project.build.sourceEncoding}</encoding>
+          <encoding>UTF-8</encoding>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>bukkit</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <relocations>
+                <relocation>
+                  <pattern>com.google.gson</pattern>
+                  <shadedPattern>org.bukkit.craftbukkit.libs.com.google.gson</shadedPattern>
+                </relocation>
+              </relocations>
+              <finalName>${project.artifactId}-v${project.version}-bukkit</finalName>
+              <minimizeJar>true</minimizeJar>
+              <artifactSet>
+                <excludes>
+                  <exclude>com.google.code.gson:gson</exclude>
+                  <exclude>org.bukkit:bukkit</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+          <execution>
+            <id>forge</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}-v${project.version}-forge</finalName>
+              <minimizeJar>true</minimizeJar>
+              <artifactSet>
+                <excludes>
+                  <exclude>com.google.code.gson:gson</exclude>
+                  <exclude>org.bukkit:bukkit</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+          <execution>
+            <id>include-libs</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>              
+              <minimizeJar>true</minimizeJar>
+              <filters>
+                <filter>
+                  <artifact>com.google.code.gson:gson</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <artifactSet>
+                <excludes>
+                  <exclude>org.bukkit:bukkit</exclude>
+                </excludes>
+              </artifactSet>
+              <finalName>${project.artifactId}-v${project.version}-include-libs</finalName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>bare</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>              
+              <artifactSet>
+                <excludes>
+                  <exclude>com.google.code.gson:gson</exclude>
+                  <exclude>org.bukkit:bukkit</exclude>
+                </excludes>
+              </artifactSet>
+              <finalName>${project.artifactId}-v${project.version}-bare</finalName>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
   
-  <profiles>
-    <profile>
-      <id>bukkit</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                <configuration>
-                  <relocations>
-                    <relocation>
-                      <pattern>com.google.gson</pattern>
-                      <shadedPattern>org.bukkit.craftbukkit.libs.com.google.gson</shadedPattern>
-                    </relocation>
-                  </relocations>
-                  <finalName>${project.name}-v${project.version}-bukkit</finalName>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>forge</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                <configuration>
-                  <finalName>${project.name}-v${project.version}-forge</finalName>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>default</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                <configuration>
-                  <finalName>${project.name}-v${project.version}</finalName>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    
-  </profiles>
-
   <dependencies>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.1</version>
-      <scope>provided</scope>
+      <version>2.2.4</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.7.2-R0.3</version>
+      <version>1.7.9-R0.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
