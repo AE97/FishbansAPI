@@ -62,7 +62,7 @@ public enum BanService {
 
     @Override
     public String toString() {
-        return "{id=" + this.name() + ", displayName=" + getDisplayName() + ", legacy=" + isLegacyBan() + "}";
+        return "{id=" + this.name() + ", displayName=" + getDisplayName() + ", legacy=" + isLegacy() + "}";
     }
 
 }
