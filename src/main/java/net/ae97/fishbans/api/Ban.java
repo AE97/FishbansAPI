@@ -61,4 +61,9 @@ public class Ban {
         return service;
     }
 
+    @Override
+    public String toString() {
+        return "Ban{service=" + service + ", server=" + server + ", reason=" + reason + "}";
+    }
+
 }

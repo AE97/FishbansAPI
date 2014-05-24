@@ -62,12 +62,12 @@ public enum BanService {
 
     @Override
     public String toString() {
-        return "{id=" + this.name() + ", displayName=" + getDisplayName() + ", legacy=" + isLegacy() + "}";
+        return "BanService{id=" + this.name() + ", displayName=" + getDisplayName() + ", legacy=" + isLegacy() + "}";
     }
 
     public static BanService getService(String name) {
         for (BanService service : BanService.values()) {
-            if (service.name().equals(name)) {
+            if (service.name().equalsIgnoreCase(name)) {
                 return service;
             }
         }

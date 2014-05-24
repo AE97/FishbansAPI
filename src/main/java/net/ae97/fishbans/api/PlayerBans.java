@@ -19,6 +19,7 @@ package net.ae97.fishbans.api;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This is the ban record for a user. It contains the list of bans this user
@@ -39,9 +40,7 @@ public class PlayerBans {
         }
         for (Ban ban : this.banlist) {
             if (ban.getService() != null) {
-                LinkedList<Ban> old = counts.get(ban.getService());
-                old.add(ban);
-                counts.put(ban.getService(), old);
+                counts.get(ban.getService()).add(ban);
             }
         }
     }
@@ -64,7 +63,7 @@ public class PlayerBans {
      * @return List of Bans from that service, never null
      */
     public List<Ban> getBanList(BanService service) {
-        return counts.get(service);
+        return (List<Ban>) counts.get(service).clone();
     }
 
     /**
@@ -85,5 +84,10 @@ public class PlayerBans {
      */
     public int getBanCount(BanService service) {
         return counts.get(service).size();
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerBans{banlist={" + StringUtils.join(banlist, ", ") + "}";
     }
 }

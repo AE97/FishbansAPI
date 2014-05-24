@@ -270,7 +270,7 @@ public class Fishbans {
      */
     public static List<Ban> getBans(String username, String service, boolean force) throws IOException, NoSuchUserException, NoSuchBanServiceException {
         BanService banservice = BanService.getService(service);
-        if (service == null) {
+        if (banservice == null) {
             throw new NoSuchBanServiceException(service);
         }
         if (!force) {
@@ -303,7 +303,7 @@ public class Fishbans {
      */
     public static List<Ban> getBans(UUID uuid, String service, boolean force) throws IOException, NoSuchUUIDException, NoSuchBanServiceException {
         BanService banservice = BanService.getService(service);
-        if (service == null) {
+        if (banservice == null) {
             throw new NoSuchBanServiceException(service);
         }
         if (!force) {
@@ -319,12 +319,17 @@ public class Fishbans {
         return bans.getBanList(banservice);
     }
 
+    public static void clearCache() {
+        synchronized (banCache) {
+            banCache.clear();
+        }
+    }
+
     private static PlayerBans checkCache(String key) {
         key = key.toLowerCase();
         synchronized (banCache) {
             BanCache cached = banCache.get(key);
-            if (cached.getCacheTime() + cacheTime > System.currentTimeMillis()) {
-            } else {
+            if (cached != null && cached.getCacheTime() + cacheTime < System.currentTimeMillis()) {
                 return cached.getBans();
             }
         }
