@@ -65,4 +65,13 @@ public enum BanService {
         return "{id=" + this.name() + ", displayName=" + getDisplayName() + ", legacy=" + isLegacy() + "}";
     }
 
+    public static BanService getService(String name) {
+        for (BanService service : BanService.values()) {
+            if (service.name().equals(name)) {
+                return service;
+            }
+        }
+        return null;
+    }
+
 }

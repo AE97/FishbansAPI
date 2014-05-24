@@ -26,9 +26,11 @@ public class Ban {
 
     private final BanService service;
     private final String reason;
+    private final String server;
 
-    protected Ban(BanService service, String reason) {
+    protected Ban(BanService service, String server, String reason) {
         this.service = service;
+        this.server = server;
         this.reason = reason;
     }
 
@@ -39,6 +41,15 @@ public class Ban {
      */
     public String getReason() {
         return reason;
+    }
+
+    /**
+     * Gets the server from this ban
+     *
+     * @return Server ban is from
+     */
+    public String getServer() {
+        return server;
     }
 
     /**
