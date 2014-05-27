@@ -96,8 +96,26 @@ public class FishbanPlayer {
         return counts.get(service).size();
     }
 
+    /**
+     * Returns the {@link UUID} for this player
+     *
+     * @return {@link UUID} for this player
+     */
+    public UUID getUUID() {
+        return playerUUID;
+    }
+
+    /**
+     * Returns the username for this player
+     *
+     * @return Username for this player
+     */
+    public String getName() {
+        return playerName;
+    }
+
     @Override
     public String toString() {
-        return "FishbanPlayer{playername=" + playerName + ", uuid=" + playerUUID.toString() + ", banlist={" + StringUtils.join(banlist, ", ") + "}";
+        return "FishbanPlayer{name=" + playerName + ", uuid=" + playerUUID.toString() + ", banlist={" + StringUtils.join(banlist, ", ") + "}";
     }
 }
