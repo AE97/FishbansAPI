@@ -17,13 +17,17 @@
 package net.ae97.fishbans.api.exceptions;
 
 /**
- * Thrown when no such {@link net.ae97.fishbans.api.BanService} exists with a given
- * name
+ * Thrown when no such {@link net.ae97.fishbans.api.BanService} exists with a
+ * given name
  *
  * @since 1.0
  * @author Lord_Ralex
  */
 public class NoSuchBanServiceException extends Exception {
+
+    public NoSuchBanServiceException(Exception parent) {
+        super(parent);
+    }
 
     public NoSuchBanServiceException(String provider) {
         super("Provider (" + provider + ") is not known by Fishbans");

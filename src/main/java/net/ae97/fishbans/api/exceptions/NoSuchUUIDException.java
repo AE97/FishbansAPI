@@ -26,6 +26,10 @@ import java.util.UUID;
  */
 public class NoSuchUUIDException extends Exception {
 
+    public NoSuchUUIDException(Exception parent) {
+        super(parent);
+    }
+
     public NoSuchUUIDException(UUID uuid) {
         super("UUID (" + uuid.toString() + ") is not known by Fishbans");
     }

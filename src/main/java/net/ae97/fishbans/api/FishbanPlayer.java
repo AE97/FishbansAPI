@@ -19,6 +19,7 @@ package net.ae97.fishbans.api;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -26,14 +27,17 @@ import org.apache.commons.lang.StringUtils;
  * (determined by UUID or username) in no particular order.
  *
  * @since 1.0
+ *
  * @author Lord_Ralex
  */
-public class PlayerBans {
+public class FishbanPlayer {
 
     private final LinkedList<Ban> banlist;
     private final EnumMap<BanService, LinkedList<Ban>> counts = new EnumMap<BanService, LinkedList<Ban>>(BanService.class);
+    private final String playerName;
+    private final UUID playerUUID;
 
-    protected PlayerBans(List<Ban> banlist) {
+    protected FishbanPlayer(List<Ban> banlist, String name, UUID uuid) {
         this.banlist = new LinkedList<Ban>(banlist);
         for (BanService service : BanService.values()) {
             counts.put(service, new LinkedList<Ban>());
@@ -43,6 +47,8 @@ public class PlayerBans {
                 counts.get(ban.getService()).add(ban);
             }
         }
+        this.playerName = name;
+        this.playerUUID = uuid;
     }
 
     /**
@@ -52,6 +58,7 @@ public class PlayerBans {
      * @return List of Bans for this player, never null.
      */
     public List<Ban> getBanList() {
+        //TODO: Replace with Immutable lists, either using custom-made or Google guava
         return (List<Ban>) banlist.clone();
     }
 
@@ -60,9 +67,11 @@ public class PlayerBans {
      * {@link BanService}. This is never null.
      *
      * @param service Service to retrieve bans from
+     *
      * @return List of Bans from that service, never null
      */
     public List<Ban> getBanList(BanService service) {
+        //TODO: Replace with Immutable lists, either using custom-made or Google guava
         return (List<Ban>) counts.get(service).clone();
     }
 
@@ -80,6 +89,7 @@ public class PlayerBans {
      * {@link BanService}
      *
      * @param service Service to retrieve ban count from
+     *
      * @return Number of bans
      */
     public int getBanCount(BanService service) {
@@ -88,6 +98,6 @@ public class PlayerBans {
 
     @Override
     public String toString() {
-        return "PlayerBans{banlist={" + StringUtils.join(banlist, ", ") + "}";
+        return "FishbanPlayer{playername=" + playerName + ", uuid=" + playerUUID.toString() + ", banlist={" + StringUtils.join(banlist, ", ") + "}";
     }
 }

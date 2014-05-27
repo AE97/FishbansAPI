@@ -24,6 +24,10 @@ package net.ae97.fishbans.api.exceptions;
  */
 public class NoSuchUserException extends Exception {
 
+    public NoSuchUserException(Exception parent) {
+        super(parent);
+    }
+
     public NoSuchUserException(String name) {
         super("Name (" + name + ") is not known by Fishbans");
     }
