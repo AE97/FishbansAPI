@@ -6,7 +6,28 @@ This uses the Fishbans API located at http://fishbans.com/docs.php
 
 # Maven 
 
-No Maven repo exists at this time, however one will be provided
+Repository:
+```
+ <repository>
+    <id>ae97</id>
+    <url>http://repo.ae97.net/</url>
+ </repository>
+```
+
+Artifact:
+```
+  <dependency>
+    <artifactId>FishbansAPI</artifactId>
+    <groupId>net.ae97</groupId>
+    <version>1.0</version>
+  </dependency>
+```
+
+The following classifications exist to provide multiple versions:
+- bare (no libraries shaded in, only FishbansAPI code)
+- bukkit (built against Bukkit, relocates the gson library for use for Bukkit)
+- forge (built against Forge)
+- include-libs (includes the gson library for redistribution)
 
 # Javadocs 
 
