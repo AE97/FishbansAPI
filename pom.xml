@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.ae97</groupId>
   <artifactId>FishbansAPI</artifactId>
-  <version>1.0</version>
+  <version>1.1-DEV</version>
   <packaging>jar</packaging>
   
   <repositories>
