@@ -7,7 +7,7 @@ This uses the Fishbans API located at http://fishbans.com/docs.php
 # Maven 
 
 Repository:
-```
+```xml
  <repository>
     <id>ae97</id>
     <url>http://repo.ae97.net/</url>
@@ -15,7 +15,7 @@ Repository:
 ```
 
 Artifact:
-```
+```xml
   <dependency>
     <artifactId>FishbansAPI</artifactId>
     <groupId>net.ae97</groupId>
@@ -23,11 +23,21 @@ Artifact:
   </dependency>
 ```
 
-The following classifications exist to provide multiple versions:
+The following classifiers exist to provide multiple versions for libraries:
 - bare (no libraries shaded in, only FishbansAPI code)
 - bukkit (built against Bukkit, relocates the gson library for use for Bukkit)
 - forge (built against Forge)
 - include-libs (includes the gson library for redistribution)
+
+To use those classifiers, add <classifier> as part of the <dependency> bracket
+```xml
+  <dependency>
+    <artifactId>FishbansAPI</artifactId>
+    <groupId>net.ae97</groupId>
+    <version>1.0</version>
+    <classifier>bukkit</classifier>
+  </dependency>
+```
 
 # Javadocs 
 
@@ -35,7 +45,7 @@ You may view the javadocs at http://ae97.github.io/FishbansAPI/apidocs/
 
 # Example Usage
 
-```
+```java
 //To get a list of bans for 'Bob'
 List<Ban> bobBans = Fishbans.getBans("Bob");
 
