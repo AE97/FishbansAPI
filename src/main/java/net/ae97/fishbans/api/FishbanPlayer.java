@@ -20,6 +20,7 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import net.ae97.fishbans.api.list.ImmutableArrayList;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -32,13 +33,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class FishbanPlayer {
 
-    private final LinkedList<Ban> banlist;
-    private final EnumMap<BanService, LinkedList<Ban>> counts = new EnumMap<BanService, LinkedList<Ban>>(BanService.class);
+    private final ImmutableArrayList<Ban> banlist;
+    private final EnumMap<BanService, List<Ban>> counts = new EnumMap<BanService, List<Ban>>(BanService.class);
     private final String playerName;
     private final UUID playerUUID;
 
     protected FishbanPlayer(List<Ban> banlist, String name, UUID uuid) {
-        this.banlist = new LinkedList<Ban>(banlist);
+        this.banlist = new ImmutableArrayList<Ban>(banlist);
         for (BanService service : BanService.values()) {
             counts.put(service, new LinkedList<Ban>());
         }
@@ -46,6 +47,9 @@ public class FishbanPlayer {
             if (ban.getService() != null) {
                 counts.get(ban.getService()).add(ban);
             }
+        }
+        for (BanService service : BanService.values()) {
+            counts.put(service, new ImmutableArrayList<Ban>(counts.remove(service)));
         }
         this.playerName = name;
         this.playerUUID = uuid;
@@ -58,8 +62,7 @@ public class FishbanPlayer {
      * @return List of Bans for this player, never null.
      */
     public List<Ban> getBanList() {
-        //TODO: Replace with Immutable lists, either using custom-made or Google guava
-        return (List<Ban>) banlist.clone();
+        return banlist;
     }
 
     /**
@@ -71,8 +74,7 @@ public class FishbanPlayer {
      * @return List of Bans from that service, never null
      */
     public List<Ban> getBanList(BanService service) {
-        //TODO: Replace with Immutable lists, either using custom-made or Google guava
-        return (List<Ban>) counts.get(service).clone();
+        return counts.get(service);
     }
 
     /**
