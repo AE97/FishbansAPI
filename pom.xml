@@ -6,10 +6,22 @@
   <version>1.1-DEV</version>
   <packaging>jar</packaging>
   
+  <licenses>
+    <license>
+      <name>General Public License, Version 3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
   <repositories>
     <repository>
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/repositories/releases/</url>
+    </repository>
+    <repository>
+      <id>ae97</id>
+      <url>http://repo.ae97.net/</url>
     </repository>
   </repositories>
   
@@ -138,6 +150,28 @@
           <destDir>apidocs</destDir>
           <encoding>UTF-8</encoding>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>maven-replacer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+            <configuration>
+              <file>src/main/java/net/ae97/fishbans/api/Fishbans.java</file>
+              <replacements>
+                <replacement>
+                  <token>private static final String VERSION .+</token>
+                  <value>private static final String VERSION = "${project.version}";</value>
+                </replacement>
+              </replacements>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

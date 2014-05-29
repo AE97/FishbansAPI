@@ -17,7 +17,7 @@
  */
 package net.ae97.fishbans.api.list;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.ListIterator;
 import org.apache.commons.lang.StringUtils;
 
@@ -34,7 +34,7 @@ public class ImmutableListIterator<T extends Object> implements ListIterator<T> 
     private int currentIndex = -1;
     private final Object[] objects;
 
-    public ImmutableListIterator(Collection<T> collection) {
+    public ImmutableListIterator(List<T> collection) {
         objects = collection.toArray(new Object[collection.size()]);
     }
 
