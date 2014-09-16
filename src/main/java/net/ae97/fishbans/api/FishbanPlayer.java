@@ -23,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import net.ae97.fishbans.api.list.ImmutableArrayList;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This is the ban record for a user. It contains the list of bans this user

@@ -435,6 +435,7 @@ public class Fishbans {
         JsonObject response = null;
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("User-Agent", "minecraft");
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String reply;
             reply = reader.readLine();

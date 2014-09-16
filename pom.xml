@@ -16,10 +16,6 @@
   
   <repositories>
     <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/repositories/releases/</url>
-    </repository>
-    <repository>
       <id>ae97</id>
       <url>http://repo.ae97.net/</url>
     </repository>
@@ -54,30 +50,6 @@
         <version>1.4</version>
         <executions>
           <execution>
-            <id>bukkit</id>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <relocations>
-                <relocation>
-                  <pattern>com.google.gson</pattern>
-                  <shadedPattern>org.bukkit.craftbukkit.libs.com.google.gson</shadedPattern>
-                </relocation>
-              </relocations>
-              <finalName>${project.artifactId}-v${project.version}-bukkit</finalName>
-              <minimizeJar>true</minimizeJar>
-              <artifactSet>
-                <excludes>
-                  <exclude>com.google.code.gson:gson</exclude>
-                  <exclude>org.bukkit:bukkit</exclude>
-                </excludes>
-              </artifactSet>
-              <shadedClassifierName>bukkit</shadedClassifierName>
-            </configuration>
-          </execution>
-          <execution>
             <id>forge</id>
             <phase>package</phase>
             <goals>
@@ -89,7 +61,6 @@
               <artifactSet>
                 <excludes>
                   <exclude>com.google.code.gson:gson</exclude>
-                  <exclude>org.bukkit:bukkit</exclude>
                 </excludes>
               </artifactSet>
               <shadedClassifierName>forge</shadedClassifierName>
@@ -132,7 +103,6 @@
               <artifactSet>
                 <excludes>
                   <exclude>com.google.code.gson:gson</exclude>
-                  <exclude>org.bukkit:bukkit</exclude>
                 </excludes>
               </artifactSet>
               <finalName>${project.artifactId}-v${project.version}-bare</finalName>
@@ -184,16 +154,15 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>bukkit</artifactId>
-      <version>1.7.9-R0.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.3.2</version>
     </dependency>
   </dependencies>
 </project>

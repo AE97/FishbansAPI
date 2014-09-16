@@ -20,7 +20,7 @@ package net.ae97.fishbans.api.list;
 
 import java.util.List;
 import java.util.ListIterator;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A {@link ListIterator} implentation which does not permit editing of the

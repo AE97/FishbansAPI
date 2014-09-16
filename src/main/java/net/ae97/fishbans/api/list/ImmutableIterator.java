@@ -21,7 +21,7 @@ package net.ae97.fishbans.api.list;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Stack;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A {@link Iterator} implentation which does not permit editing of the
