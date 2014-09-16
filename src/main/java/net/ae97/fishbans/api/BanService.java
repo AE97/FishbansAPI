@@ -27,7 +27,7 @@ package net.ae97.fishbans.api;
  */
 public enum BanService {
 
-    MCBANS("McBans", true),
+    MCBANS("McBans", false),
     MCBOUNCER("McBouncer", false),
     MINEBANS("MineBans", false),
     MCBLOCKIT("McBlockIt", true),
