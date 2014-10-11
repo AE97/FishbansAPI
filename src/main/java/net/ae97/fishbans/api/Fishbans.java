@@ -58,13 +58,13 @@ public class Fishbans {
         return VERSION;
     }
 
-    public static FishbanPlayer getFishbanPlayer(String name) throws IOException, NoSuchUserException {
+    public static FishbansPlayer getFishbanPlayer(String name) throws IOException, NoSuchUserException {
         return getFishbanPlayer(name, false);
     }
 
-    public static FishbanPlayer getFishbanPlayer(String name, boolean force) throws IOException, NoSuchUserException {
+    public static FishbansPlayer getFishbanPlayer(String name, boolean force) throws IOException, NoSuchUserException {
         if (!force) {
-            FishbanPlayer player = checkCache(name);
+            FishbansPlayer player = checkCache(name);
             if (player != null) {
                 return player;
             }
@@ -72,13 +72,13 @@ public class Fishbans {
         return getData(name);
     }
 
-    public static FishbanPlayer getFishbanPlayer(UUID uuid) throws IOException, NoSuchUUIDException {
+    public static FishbansPlayer getFishbanPlayer(UUID uuid) throws IOException, NoSuchUUIDException {
         return getFishbanPlayer(uuid, false);
     }
 
-    public static FishbanPlayer getFishbanPlayer(UUID uuid, boolean force) throws IOException, NoSuchUUIDException {
+    public static FishbansPlayer getFishbanPlayer(UUID uuid, boolean force) throws IOException, NoSuchUUIDException {
         if (!force) {
-            FishbanPlayer player = checkCache(uuid.toString());
+            FishbansPlayer player = checkCache(uuid.toString());
             if (player != null) {
                 return player;
             }
@@ -137,7 +137,7 @@ public class Fishbans {
      *
      * @since 1.0
      */
-    public static List<Ban> getBans(String username, BanService service) throws IOException, NoSuchUserException {
+    public static List<Ban> getBans(String username, BanServices service) throws IOException, NoSuchUserException {
         return getBans(username, service, false);
     }
 
@@ -157,7 +157,7 @@ public class Fishbans {
      *
      * @since 1.0
      */
-    public static List<Ban> getBans(UUID uuid, BanService service) throws IOException, NoSuchUUIDException {
+    public static List<Ban> getBans(UUID uuid, BanServices service) throws IOException, NoSuchUUIDException {
         return getBans(uuid, service, false);
     }
 
@@ -255,7 +255,7 @@ public class Fishbans {
      *
      * @since 1.0
      */
-    public static List<Ban> getBans(String username, BanService service, boolean force) throws IOException, NoSuchUserException {
+    public static List<Ban> getBans(String username, BanServices service, boolean force) throws IOException, NoSuchUserException {
         if (service == null) {
             throw new IllegalArgumentException("BanService cannot be null");
         }
@@ -277,7 +277,7 @@ public class Fishbans {
      *
      * @since 1.0
      */
-    public static List<Ban> getBans(UUID uuid, BanService service, boolean force) throws IOException, NoSuchUUIDException {
+    public static List<Ban> getBans(UUID uuid, BanServices service, boolean force) throws IOException, NoSuchUUIDException {
         if (service == null) {
             throw new IllegalArgumentException("BanService cannot be null");
         }
@@ -299,7 +299,7 @@ public class Fishbans {
      * @since 1.0
      */
     public static List<Ban> getBans(String username, String service, boolean force) throws IOException, NoSuchUserException, NoSuchBanServiceException {
-        BanService banservice = BanService.getService(service);
+        BanServices banservice = BanServices.getService(service);
         if (banservice == null) {
             throw new NoSuchBanServiceException(service);
         }
@@ -325,7 +325,7 @@ public class Fishbans {
      * @since 1.0
      */
     public static List<Ban> getBans(UUID uuid, String service, boolean force) throws IOException, NoSuchUUIDException, NoSuchBanServiceException {
-        BanService banservice = BanService.getService(service);
+        BanServices banservice = BanServices.getService(service);
         if (banservice == null) {
             throw new NoSuchBanServiceException(service);
         }
@@ -338,7 +338,7 @@ public class Fishbans {
         }
     }
 
-    private static FishbanPlayer checkCache(String key) {
+    private static FishbansPlayer checkCache(String key) {
         key = key.toLowerCase();
         synchronized (banCache) {
             BanCache cached = banCache.get(key);
@@ -349,7 +349,7 @@ public class Fishbans {
         return null;
     }
 
-    private static FishbanPlayer getData(UUID uuid) throws IOException, NoSuchUUIDException {
+    private static FishbansPlayer getData(UUID uuid) throws IOException, NoSuchUUIDException {
         String name = getUsernameFromUUID(uuid);
         if (name == null) {
             throw new NoSuchUUIDException(uuid);
@@ -361,7 +361,7 @@ public class Fishbans {
         }
     }
 
-    private static FishbanPlayer getData(String name) throws IOException, NoSuchUserException {
+    private static FishbansPlayer getData(String name) throws IOException, NoSuchUserException {
         URL connURL = new URL("http://api.fishbans.com/bans/" + name);
         BufferedReader reader = null;
         JsonElement element = null;
@@ -389,7 +389,7 @@ public class Fishbans {
         JsonObject bans = maps.getAsJsonObject("bans").getAsJsonObject("service");
         LinkedList<Ban> banlist = new LinkedList<Ban>();
         for (Entry<String, JsonElement> banEntry : bans.entrySet()) {
-            BanService provider = BanService.getService(banEntry.getKey());
+            BanServices provider = BanServices.getService(banEntry.getKey());
             JsonObject obj = banEntry.getValue().getAsJsonObject();
             if (obj.get("bans").getAsInt() == 0) {
                 continue;
@@ -398,7 +398,7 @@ public class Fishbans {
                 banlist.add(new Ban(provider, banListing.getKey(), banListing.getValue().getAsString()));
             }
         }
-        FishbanPlayer playerBans = new FishbanPlayer(banlist, maps.getAsJsonObject("bans").get("username").getAsString(), convertToUUID(maps.getAsJsonObject("bans").get("uuid").getAsString()));
+        FishbansPlayer playerBans = new FishbansPlayer(banlist, maps.getAsJsonObject("bans").get("username").getAsString(), convertToUUID(maps.getAsJsonObject("bans").get("uuid").getAsString()));
         banCache.put(name.toLowerCase(), new BanCache(playerBans));
         return playerBans;
     }
@@ -463,10 +463,10 @@ public class Fishbans {
 
     private static class BanCache {
 
-        private final FishbanPlayer banlist;
+        private final FishbansPlayer banlist;
         private final long storageTime;
 
-        private BanCache(FishbanPlayer banlist) {
+        private BanCache(FishbansPlayer banlist) {
             this.banlist = banlist;
             this.storageTime = System.currentTimeMillis();
         }
@@ -475,7 +475,7 @@ public class Fishbans {
             return storageTime;
         }
 
-        protected FishbanPlayer getBans() {
+        protected FishbansPlayer getBans() {
             return banlist;
         }
     }

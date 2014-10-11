@@ -26,11 +26,11 @@ package net.ae97.fishbans.api;
  */
 public class Ban {
 
-    private final BanService service;
+    private final BanServices service;
     private final String reason;
     private final String server;
 
-    protected Ban(BanService service, String server, String reason) {
+    protected Ban(BanServices service, String server, String reason) {
         this.service = service;
         this.server = server;
         this.reason = reason;
@@ -55,11 +55,11 @@ public class Ban {
     }
 
     /**
-     * Gets the {@link BanService} that contains this ban reason
+     * Gets the {@link BanServices} that contains this ban reason
      *
-     * @return The {@link BanService} which issued this ban
+     * @return The {@link BanServices} which issued this ban
      */
-    public BanService getService() {
+    public BanServices getService() {
         return service;
     }
 
